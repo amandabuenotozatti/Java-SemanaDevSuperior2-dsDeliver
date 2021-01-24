@@ -1,6 +1,3 @@
-//o ProductDTO é um objeto que vai ser um objeto para carregar os dados do produto
-//da camada de web para o frontend
-
 package com.devsuperior.dsdeliver.dto;
 
 import java.io.Serializable;
@@ -10,13 +7,12 @@ import com.devsuperior.dsdeliver.entities.Product;
 public class ProductDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String name;
 	private Double price;
 	private String description;
 	private String imageUri;
-	
-	//para copiar os dados de um produto para cá vamos utilizar um construtor
 	
 	public ProductDTO() {
 	}
@@ -30,13 +26,11 @@ public class ProductDTO implements Serializable{
 	}
 	
 	public ProductDTO(Product entity) {
-		id = entity.getId(); //pegando o ID da entidade e copiando para o meu DTO
+		id = entity.getId();
 		name = entity.getName();
 		price = entity.getPrice();
 		description = entity.getDescription();
 		imageUri = entity.getImageUri();
-		
-		
 	}
 
 	public Long getId() {
@@ -78,6 +72,4 @@ public class ProductDTO implements Serializable{
 	public void setImageUri(String imageUri) {
 		this.imageUri = imageUri;
 	}
-	
-	
 }

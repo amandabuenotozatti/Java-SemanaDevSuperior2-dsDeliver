@@ -5,11 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 @Entity
-@Table (name = "tb_product")
+@Table(name = "tb_product")
 public class Product implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,8 +22,7 @@ public class Product implements Serializable{
 	private String description;
 	private String imageUri;
 	
-	public Product(){
-		
+	public Product() {		
 	}
 
 	public Product(Long id, String name, Double price, String description, String imageUri) {

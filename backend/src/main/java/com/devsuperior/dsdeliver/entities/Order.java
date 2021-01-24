@@ -8,18 +8,18 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 @Entity
-@Table (name = "tb_order")
+@Table(name = "tb_order")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,15 +28,12 @@ public class Order implements Serializable {
 	private Double longitude;
 	private Instant moment;
 	private OrderStatus status;
-	
+
 	@ManyToMany
-	@JoinTable(name = "tb_order_product",
-		joinColumns = @JoinColumn(name = "order_id"),
-		inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@JoinTable(name = "tb_order_product", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private Set<Product> products = new HashSet<>();
-	
+
 	public Order() {
-		
 	}
 
 	public Order(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status) {
@@ -71,14 +68,6 @@ public class Order implements Serializable {
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
-	}
-
-	public Double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
 	}
 
 	public Instant getMoment() {
@@ -126,5 +115,11 @@ public class Order implements Serializable {
 		return true;
 	}
 
-	
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 }

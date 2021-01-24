@@ -19,26 +19,23 @@ import com.devsuperior.dsdeliver.repositories.ProductRepository;
 @Service
 public class OrderService {
 	
-	@Autowired 
+	@Autowired
 	private OrderRepository repository;
 	
-	@Autowired 
+	@Autowired
 	private ProductRepository productRepository;
 	
-	//Função para retornar uma lista de produtos
 	@Transactional(readOnly = true)
-	public List <OrderDTO> findAll(){
-		List<Order> list = repository.findOrdersWithProducts();
-
+	public List<OrderDTO> findAll(){
+		List<Order> list = repository.findOrderWithProducts();
 		return list.stream().map(x -> new OrderDTO(x)).collect(Collectors.toList());
 	}
 	
 	@Transactional
-	public OrderDTO insert(OrderDTO dto){//método e argumento
-		Order order = new Order(null, dto.getAddress(), dto.getLatitude(), dto.getLongitude(),
-				Instant.now(), OrderStatus.PENDING);
-		for(ProductDTO p : dto.getProducts()) {
-			Product product = productRepository.getOne(p.getId());
+	public OrderDTO insert(OrderDTO dto){
+		Order order = new Order(null, dto.getAddress(), dto.getLatitude(), dto.getLongitude(), Instant.now(), OrderStatus.PENDING);
+		for (ProductDTO p : dto.getProducts()) {
+			Product product = productRepository.getOne(p.getId()); 
 			order.getProducts().add(product);
 		}
 		order = repository.save(order);
@@ -46,11 +43,10 @@ public class OrderService {
 	}
 	
 	@Transactional
-	public OrderDTO setDelivered(Long id) {
+	public OrderDTO setDelivered(Long id){
 		Order order = repository.getOne(id);
 		order.setStatus(OrderStatus.DELIVERED);
 		order = repository.save(order);
 		return new OrderDTO(order);
 	}
 }
-

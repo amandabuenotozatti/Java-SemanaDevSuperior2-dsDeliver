@@ -1,4 +1,3 @@
-//controlador REST para trabalhar com o produto 
 package com.devsuperior.dsdeliver.controllers;
 
 import java.net.URI;
@@ -12,38 +11,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.dsdeliver.dto.OrderDTO;
 import com.devsuperior.dsdeliver.services.OrderService;
 
-@RestController
-@RequestMapping(value= "/orders") //definir o caminho do seu recurso
-
+@RestControllerAdvice
+@RequestMapping(value = "/orders")
 public class OrderController {
-	//temos que injetar uma dependencia do productservices
-	//o controller depende do service e este do repository
-	
 	@Autowired
 	private OrderService service;
 	
-	@GetMapping 
-	public ResponseEntity<List<OrderDTO>> findAll() { //vai encapsular para nós uma resposta de uma requisição HTTP
+	@GetMapping
+	public ResponseEntity<List<OrderDTO>> findAll(){
 		List<OrderDTO> list = service.findAll();
-		return ResponseEntity.ok().body(list); //metodo que vai criar uma resposta se foi um caso de sucesso 
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping
-	public ResponseEntity<OrderDTO> insert (@RequestBody OrderDTO dto){
+	public ResponseEntity<OrderDTO> insert(@RequestBody OrderDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping("/{id}/delivered")
+	@PutMapping("/{id}/delivered") 
 	public ResponseEntity<OrderDTO> setDelivered(@PathVariable Long id){
 		OrderDTO dto = service.setDelivered(id);
-		return ResponseEntity.ok().body(dto);
+		return ResponseEntity.ok().body(dto); 
 	}
 }
